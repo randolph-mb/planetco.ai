@@ -38,60 +38,154 @@
       "description": "The strategic AI observatory."
     }
   </script>
+
   <title>PlanetCo.ai — Coming Soon</title>
   <link rel="icon" type="image/png" href="assets/favicon_optimized.png">
   <link rel="apple-touch-icon" href="assets/favicon_optimized.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
-    body {
+    *, *::before, *::after {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      background-color: #0e0e0e;
-      color: white;
-      font-family: 'Poppins', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      background-color: #0a0a0f;
+      color: #f0f0f0;
+      font-family: 'Inter', sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
       text-align: center;
+      padding: 2rem;
+    }
+
+    /* Subtle radial glow — observatory atmosphere */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 40%, rgba(74, 120, 246, 0.07) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .logo {
-      width: 180px;
-      height: auto;
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
       margin-bottom: 2rem;
-      border-radius: 15px;
+      object-fit: cover;
+    }
+
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #4a78f6;
+      margin-bottom: 0.75rem;
     }
 
     h1 {
-      font-size: 3rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.2rem, 6vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: #f0f0f0;
       margin-bottom: 1rem;
     }
 
-    h2 {
-      font-weight: normal;
-      font-size: 1.2rem;
-      opacity: 0.8;
+    .tagline {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: #8b91a8;
+      max-width: 380px;
+      line-height: 1.65;
+      margin-bottom: 2rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(74, 120, 246, 0.08);
+      border: 1px solid rgba(74, 120, 246, 0.22);
+      border-radius: 100px;
+      padding: 0.375rem 0.875rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #4a78f6;
+      margin-bottom: 3rem;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      background: #4a78f6;
+      border-radius: 50%;
+      flex-shrink: 0;
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.75); }
     }
 
     .name {
-      margin-top: 3rem;
-      font-size: 1rem;
-      opacity: 0.5;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      color: #3e4358;
+    }
+
+    .name strong {
+      color: #555c75;
+      font-weight: 500;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .badge-dot {
+        animation: none;
+      }
     }
   </style>
 </head>
 
 <body>
-  <img src="assets/favicon_optimized.png" alt="PlanetCo.ai Logo" class="logo" />
-  <h1>PlanetCo.ai</h1>
-  <h2>The Strategic AI Observatory — Coming Soon</h2>
-
-  <div class="name">
-    Built by <strong>Randolph Mbecheun</strong>
+  <div class="container">
+    <img src="assets/favicon_optimized.png" alt="PlanetCo.ai Logo" class="logo" />
+    <p class="eyebrow">Strategic AI Observatory</p>
+    <h1>PlanetCo.ai</h1>
+    <p class="tagline">The Strategic AI Observatory — tracking the forces shaping the age of intelligence.</p>
+    <div class="badge">
+      <span class="badge-dot" aria-hidden="true"></span>
+      Coming Soon
+    </div>
+    <div class="name">Built by <strong>Randolph Mbecheun</strong></div>
   </div>
 </body>
 
