@@ -71,6 +71,14 @@
       padding: 2rem;
     }
 
+    /* Star field canvas — fixed behind everything */
+    #stars {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
     /* Subtle radial glow — observatory atmosphere */
     body::before {
       content: '';
@@ -78,15 +86,36 @@
       inset: 0;
       background: radial-gradient(ellipse at 50% 40%, rgba(74, 120, 246, 0.07) 0%, transparent 65%);
       pointer-events: none;
-      z-index: 0;
+      z-index: 1;
     }
 
     .container {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
+    }
+
+    /* Entrance animation base state — invisible + shifted down */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .reveal:nth-child(1) { animation-delay: 0.05s; }
+    .reveal:nth-child(2) { animation-delay: 0.15s; }
+    .reveal:nth-child(3) { animation-delay: 0.25s; }
+    .reveal:nth-child(4) { animation-delay: 0.38s; }
+    .reveal:nth-child(5) { animation-delay: 0.50s; }
+    .reveal:nth-child(6) { animation-delay: 0.62s; }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .logo {
@@ -168,6 +197,11 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
       .badge-dot {
         animation: none;
       }
@@ -176,17 +210,94 @@
 </head>
 
 <body>
+  <canvas id="stars" aria-hidden="true"></canvas>
+
   <div class="container">
-    <img src="assets/favicon_optimized.png" alt="PlanetCo.ai Logo" class="logo" />
-    <p class="eyebrow">Strategic AI Observatory</p>
-    <h1>PlanetCo.ai</h1>
-    <p class="tagline">The Strategic AI Observatory — tracking the forces shaping the age of intelligence.</p>
-    <div class="badge">
+    <img src="assets/favicon_optimized.png" alt="PlanetCo.ai Logo" class="logo reveal" />
+    <p class="eyebrow reveal">Strategic AI Observatory</p>
+    <h1 class="reveal">PlanetCo.ai</h1>
+    <p class="tagline reveal">The Strategic AI Observatory — tracking the forces shaping the age of intelligence.</p>
+    <div class="badge reveal">
       <span class="badge-dot" aria-hidden="true"></span>
       Coming Soon
     </div>
-    <div class="name">Built by <strong>Randolph Mbecheun</strong></div>
+    <div class="name reveal">Built by <strong>Randolph Mbecheun</strong></div>
   </div>
+
+  <script>
+    (function () {
+      const canvas = document.getElementById('stars');
+      const ctx = canvas.getContext('2d');
+
+      // Respect reduced motion preference
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      const STAR_COUNT = 55;
+      const stars = [];
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      function randomBetween(a, b) {
+        return a + Math.random() * (b - a);
+      }
+
+      function createStar() {
+        return {
+          x: randomBetween(0, canvas.width),
+          y: randomBetween(0, canvas.height),
+          radius: randomBetween(0.4, 1.2),
+          opacity: randomBetween(0.15, 0.45),
+          speedX: randomBetween(-0.04, 0.04),
+          speedY: randomBetween(-0.06, -0.02), // drift upward, very slowly
+          twinkleOffset: randomBetween(0, Math.PI * 2),
+          twinkleSpeed: randomBetween(0.003, 0.008),
+        };
+      }
+
+      resize();
+      for (let i = 0; i < STAR_COUNT; i++) stars.push(createStar());
+
+      window.addEventListener('resize', () => {
+        resize();
+        stars.length = 0;
+        for (let i = 0; i < STAR_COUNT; i++) stars.push(createStar());
+      });
+
+      let frame = 0;
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        frame++;
+
+        for (const s of stars) {
+          // Gentle twinkle via sine wave on opacity
+          const twinkle = Math.sin(frame * s.twinkleSpeed + s.twinkleOffset) * 0.12;
+          const alpha = Math.max(0, Math.min(1, s.opacity + twinkle));
+
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(200, 215, 255, ${alpha})`;
+          ctx.fill();
+
+          // Drift
+          s.x += s.speedX;
+          s.y += s.speedY;
+
+          // Wrap around edges
+          if (s.y < -2) s.y = canvas.height + 2;
+          if (s.x < -2) s.x = canvas.width + 2;
+          if (s.x > canvas.width + 2) s.x = -2;
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      draw();
+    })();
+  </script>
 </body>
 
 </html>
