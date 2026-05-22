@@ -310,6 +310,83 @@
       transform: translateY(-2px);
     }
 
+    /* ===== Card visualizations ===== */
+    .card-visual {
+      width: 100%;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: rgba(74, 120, 246, 0.04);
+      border: 1px solid rgba(74, 120, 246, 0.08);
+      overflow: hidden;
+    }
+
+    /* Waveform — noise suppression */
+    .card-visual-waveform svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .wave {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 1.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .wave-noisy {
+      animation: wave-noisy-fade 4.5s ease-in-out infinite;
+    }
+
+    .wave-clean {
+      animation: wave-clean-fade 4.5s ease-in-out infinite;
+    }
+
+    @keyframes wave-noisy-fade {
+      0%, 100% { opacity: 0.75; }
+      50%      { opacity: 0.12; }
+    }
+
+    @keyframes wave-clean-fade {
+      0%, 100% { opacity: 0.12; }
+      50%      { opacity: 0.75; }
+    }
+
+    /* Equalizer — Cue */
+    .card-visual-equalizer {
+      gap: 6px;
+    }
+
+    .eq-bar {
+      display: inline-block;
+      width: 4px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 2px;
+      opacity: 0.75;
+      animation: eq-pulse 1.3s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    .eq-bar:nth-child(1) { animation-duration: 1.1s; animation-delay: -0.10s; }
+    .eq-bar:nth-child(2) { animation-duration: 1.5s; animation-delay: -0.45s; }
+    .eq-bar:nth-child(3) { animation-duration: 0.9s; animation-delay: -0.20s; }
+    .eq-bar:nth-child(4) { animation-duration: 1.3s; animation-delay: -0.65s; }
+    .eq-bar:nth-child(5) { animation-duration: 1.7s; animation-delay: -0.30s; }
+    .eq-bar:nth-child(6) { animation-duration: 1.0s; animation-delay: -0.55s; }
+    .eq-bar:nth-child(7) { animation-duration: 1.4s; animation-delay: -0.15s; }
+    .eq-bar:nth-child(8) { animation-duration: 1.2s; animation-delay: -0.40s; }
+    .eq-bar:nth-child(9) { animation-duration: 1.6s; animation-delay: -0.05s; }
+
+    @keyframes eq-pulse {
+      0%, 100% { height: 8px; }
+      50%      { height: 34px; }
+    }
+
     .card-tags {
       display: flex;
       gap: 0.5rem;
@@ -490,7 +567,16 @@
         animation: none;
         transition: none;
       }
-      .badge-dot { animation: none; }
+      .badge-dot,
+      .wave-noisy,
+      .wave-clean,
+      .eq-bar {
+        animation: none;
+      }
+      /* Keep the clean waveform visible when motion is off */
+      .wave-clean { opacity: 0.75; }
+      .wave-noisy { opacity: 0.12; }
+      .eq-bar { height: 18px; }
     }
   </style>
 </head>
@@ -539,6 +625,12 @@
       <div class="cards reveal-group">
         <!-- Noise Suppression -->
         <article class="card reveal">
+          <div class="card-visual card-visual-waveform" aria-hidden="true">
+            <svg viewBox="0 0 240 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path class="wave wave-noisy" d="M0,20 L8,8 L16,30 L24,11 L32,29 L40,14 L48,26 L56,9 L64,28 L72,13 L80,31 L88,10 L96,27 L104,16 L112,7 L120,30 L128,14 L136,31 L144,11 L152,27 L160,16 L168,8 L176,29 L184,15 L192,30 L200,11 L208,26 L216,9 L224,29 L232,16 L240,20" />
+              <path class="wave wave-clean" d="M0,20 Q15,11 30,20 T60,20 T90,20 T120,20 T150,20 T180,20 T210,20 T240,20" />
+            </svg>
+          </div>
           <div class="card-tags">
             <span class="tag">audio</span>
             <span class="tag">video</span>
@@ -565,6 +657,17 @@
 
         <!-- Cue -->
         <article class="card reveal">
+          <div class="card-visual card-visual-equalizer" aria-hidden="true">
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+          </div>
           <div class="card-tags">
             <span class="tag">audio</span>
             <span class="tag">generative</span>
