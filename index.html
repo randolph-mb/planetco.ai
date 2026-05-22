@@ -176,8 +176,40 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      text-align: center;
       padding: 6rem 2rem 4rem;
+      text-align: center;
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: center;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    @media (min-width: 880px) {
+      .hero-content {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+        gap: 4rem;
+      }
+      .hero {
+        text-align: left;
+      }
+      .hero-text {
+        align-items: flex-start;
+      }
+      .tagline {
+        margin-left: 0;
+        margin-right: 0;
+      }
     }
 
     .logo {
@@ -213,6 +245,151 @@
       max-width: 460px;
       line-height: 1.6;
       margin: 0 auto 2.5rem;
+    }
+
+    /* ===== Hero video stage ===== */
+    .hero-video-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(74, 120, 246, 0.05) inset;
+    }
+
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-slide.is-active {
+      opacity: 1;
+    }
+
+    .hero-slide video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Placeholder visual — replace with <video> when ready */
+    .hero-slide-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background:
+        radial-gradient(ellipse at 30% 30%, rgba(74, 120, 246, 0.10), transparent 60%),
+        radial-gradient(ellipse at 70% 70%, rgba(74, 120, 246, 0.06), transparent 60%),
+        var(--surface);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-slide-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(140, 155, 200, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(140, 155, 200, 0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    .slide-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .slide-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .slide-caption {
+      font-size: 0.82rem;
+      color: var(--text-faint);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-top: 0.75rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Label overlay sitting on top of the active video */
+    .slide-label {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 0.45rem 0.7rem;
+      background: rgba(10, 10, 15, 0.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 8px;
+      border: 1px solid rgba(140, 155, 200, 0.10);
+      pointer-events: none;
+    }
+
+    .slide-label .slide-num {
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+    }
+
+    .slide-label .slide-title {
+      font-size: 0.92rem;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    /* Slide progress dots */
+    .slide-dots {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 2;
+    }
+
+    .slide-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(140, 155, 200, 0.25);
+      transition: background 0.3s ease, width 0.3s ease;
+    }
+
+    .slide-dot.is-active {
+      background: var(--accent);
+      width: 18px;
+      border-radius: 3px;
     }
 
     .badge {
@@ -547,12 +724,13 @@
       transform: translateY(0);
       animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
     }
-    .hero .reveal:nth-child(1) { animation-delay: 0.05s; }
-    .hero .reveal:nth-child(2) { animation-delay: 0.18s; }
-    .hero .reveal:nth-child(3) { animation-delay: 0.32s; }
-    .hero .reveal:nth-child(4) { animation-delay: 0.46s; }
-    .hero .reveal:nth-child(5) { animation-delay: 0.60s; }
-    .hero .reveal:nth-child(6) { animation-delay: 0.78s; }
+    .hero-text .reveal:nth-child(1) { animation-delay: 0.05s; }
+    .hero-text .reveal:nth-child(2) { animation-delay: 0.18s; }
+    .hero-text .reveal:nth-child(3) { animation-delay: 0.32s; }
+    .hero-text .reveal:nth-child(4) { animation-delay: 0.46s; }
+    .hero-text .reveal:nth-child(5) { animation-delay: 0.60s; }
+    .hero-video-stage.reveal { animation-delay: 0.50s; }
+    .hero > .scroll-cue.reveal { animation-delay: 0.85s; }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(18px); }
@@ -599,15 +777,56 @@
   <main id="top">
     <!-- ===== HERO ===== -->
     <section class="hero">
-      <img src="assets/favicon_optimized.png" alt="PlanetCo.ai Logo" class="logo reveal" />
-      <p class="eyebrow reveal">Strategic AI Observatory</p>
-      <h1 class="reveal">PlanetCo.ai</h1>
-      <p class="tagline reveal">
-        ML learning and agent development — the workshop behind Randolph Mbecheun's exploration of applied intelligence.
-      </p>
-      <div class="badge reveal">
-        <span class="badge-dot" aria-hidden="true"></span>
-        Active workshop
+      <div class="hero-content">
+        <div class="hero-text">
+          <img src="assets/favicon_optimized.png" alt="PlanetCo.ai Logo" class="logo reveal" />
+          <p class="eyebrow reveal">Strategic AI Observatory</p>
+          <h1 class="reveal">PlanetCo.ai</h1>
+          <p class="tagline reveal">
+            ML learning and agent development — the workshop behind Randolph Mbecheun's exploration of applied intelligence.
+          </p>
+          <div class="badge reveal">
+            <span class="badge-dot" aria-hidden="true"></span>
+            Active workshop
+          </div>
+        </div>
+
+        <!-- Video stage — replace each .hero-slide-placeholder with a <video> tag once AI-generated videos are ready.
+             Example: <video autoplay muted loop playsinline><source src="assets/videos/demo-1.mp4" type="video/mp4"></video> -->
+        <div class="hero-video-stage reveal" aria-label="Project demos">
+          <div class="hero-slide is-active" data-slide="0">
+            <video autoplay muted loop playsinline preload="auto">
+              <source src="assets/videos/ml-learning-vision.mp4" type="video/mp4" />
+            </video>
+            <div class="slide-label">
+              <span class="slide-num">01 / VISION</span>
+              <span class="slide-title">Machine Learning</span>
+            </div>
+          </div>
+          <div class="hero-slide" data-slide="1">
+            <video muted loop playsinline preload="metadata">
+              <source src="assets/videos/agent-development-vision.mp4" type="video/mp4" />
+            </video>
+            <div class="slide-label">
+              <span class="slide-num">02 / VISION</span>
+              <span class="slide-title">Agent Development</span>
+            </div>
+          </div>
+          <div class="hero-slide" data-slide="2">
+            <video muted loop playsinline preload="metadata">
+              <source src="assets/videos/observatory-vision.mp4" type="video/mp4" />
+            </video>
+            <div class="slide-label">
+              <span class="slide-num">03 / VISION</span>
+              <span class="slide-title">The Observatory</span>
+            </div>
+          </div>
+          <div class="slide-dots" aria-hidden="true">
+            <span class="slide-dot is-active" data-dot="0"></span>
+            <span class="slide-dot" data-dot="1"></span>
+            <span class="slide-dot" data-dot="2"></span>
+          </div>
+        </div>
       </div>
       <div class="scroll-cue reveal">↓ Scroll to explore</div>
     </section>
@@ -815,6 +1034,51 @@
 
       // Observe groups and standalone reveals outside the hero (hero auto-animates)
       document.querySelectorAll('.section-block .reveal, .section-block .reveal-group').forEach(el => io.observe(el));
+    })();
+
+    // ===== Hero video slide cycling =====
+    (function () {
+      const stage = document.querySelector('.hero-video-stage');
+      if (!stage) return;
+
+      const slides = Array.from(stage.querySelectorAll('.hero-slide'));
+      const dots   = Array.from(stage.querySelectorAll('.slide-dot'));
+      if (slides.length < 2) return;
+
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const SLIDE_MS = 6000;  // time each slide is visible
+      let current = 0;
+
+      function setActive(next) {
+        slides[current].classList.remove('is-active');
+        dots[current]?.classList.remove('is-active');
+
+        // Pause outgoing video if present
+        const outVideo = slides[current].querySelector('video');
+        if (outVideo) { try { outVideo.pause(); } catch (e) {} }
+
+        current = next;
+
+        slides[current].classList.add('is-active');
+        dots[current]?.classList.add('is-active');
+
+        // Play incoming video from start if present
+        const inVideo = slides[current].querySelector('video');
+        if (inVideo) {
+          inVideo.currentTime = 0;
+          inVideo.play().catch(() => {});
+        }
+      }
+
+      // Auto-play first video if present
+      const firstVideo = slides[0].querySelector('video');
+      if (firstVideo) firstVideo.play().catch(() => {});
+
+      if (reduce) return;
+
+      setInterval(() => {
+        setActive((current + 1) % slides.length);
+      }, SLIDE_MS);
     })();
   </script>
 </body>
