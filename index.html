@@ -5,13 +5,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description"
-    content="PlanetCo.ai is the strategic AI observatory — built by Randolph Mbecheun. Coming soon." />
+    content="PlanetCo.ai is the strategic AI observatory of Randolph Mbecheun — ML learning and agent development work." />
   <meta name="robots" content="index, follow" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="PlanetCo.ai — The Strategic AI Observatory" />
   <meta property="og:description"
-    content="PlanetCo.ai is the strategic AI observatory — built by Randolph Mbecheun. Coming soon." />
+    content="ML learning and agent development work by Randolph Mbecheun." />
   <meta property="og:image" content="assets/favicon_optimized.png" />
   <meta property="og:url" content="https://planetco.ai" />
   <meta property="og:type" content="website" />
@@ -20,7 +20,7 @@
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="PlanetCo.ai — The Strategic AI Observatory" />
   <meta name="twitter:description"
-    content="PlanetCo.ai is the strategic AI observatory — built by Randolph Mbecheun. Coming soon." />
+    content="ML learning and agent development work by Randolph Mbecheun." />
   <meta name="twitter:image" content="assets/favicon_optimized.png" />
 
   <link rel="canonical" href="https://planetco.ai" />
@@ -39,12 +39,12 @@
     }
   </script>
 
-  <title>PlanetCo.ai — Coming Soon</title>
+  <title>PlanetCo.ai — Strategic AI Observatory</title>
   <link rel="icon" type="image/png" href="assets/favicon_optimized.png">
   <link rel="apple-touch-icon" href="assets/favicon_optimized.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after {
@@ -53,25 +53,34 @@
       padding: 0;
     }
 
-    html, body {
-      height: 100%;
-      width: 100%;
+    :root {
+      --bg: #0a0a0f;
+      --surface: #11131a;
+      --surface-hover: #161924;
+      --border: rgba(140, 155, 200, 0.10);
+      --border-strong: rgba(140, 155, 200, 0.22);
+      --text: #f0f0f0;
+      --text-muted: #8b91a8;
+      --text-faint: #555c75;
+      --accent: #4a78f6;
+      --accent-soft: rgba(74, 120, 246, 0.08);
+      --accent-border: rgba(74, 120, 246, 0.22);
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      background-color: #0a0a0f;
-      color: #f0f0f0;
+      background-color: var(--bg);
+      color: var(--text);
       font-family: 'Inter', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      line-height: 1.6;
       min-height: 100vh;
-      text-align: center;
-      padding: 2rem;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Star field canvas — fixed behind everything */
+    /* Star field — fixed behind everything */
     #stars {
       position: fixed;
       inset: 0;
@@ -84,38 +93,91 @@
       content: '';
       position: fixed;
       inset: 0;
-      background: radial-gradient(ellipse at 50% 40%, rgba(74, 120, 246, 0.07) 0%, transparent 65%);
+      background: radial-gradient(ellipse at 50% 20%, rgba(74, 120, 246, 0.08) 0%, transparent 60%);
       pointer-events: none;
       z-index: 1;
     }
 
-    .container {
+    main, nav, footer {
       position: relative;
       z-index: 2;
+    }
+
+    /* ===== Navigation ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(10, 10, 15, 0.55);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-brand img {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { gap: 1.25rem; }
+      .nav-links a { font-size: 0.78rem; }
+    }
+
+    /* ===== Layout ===== */
+    .section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-    }
-
-    /* Entrance animation base state — invisible + shifted down */
-    .reveal {
-      opacity: 0;
-      transform: translateY(18px);
-      animation: fadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-
-    .reveal:nth-child(1) { animation-delay: 0.05s; }
-    .reveal:nth-child(2) { animation-delay: 0.15s; }
-    .reveal:nth-child(3) { animation-delay: 0.25s; }
-    .reveal:nth-child(4) { animation-delay: 0.38s; }
-    .reveal:nth-child(5) { animation-delay: 0.50s; }
-    .reveal:nth-child(6) { animation-delay: 0.62s; }
-
-    @keyframes fadeUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
     }
 
     .logo {
@@ -132,7 +194,7 @@
       font-weight: 500;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: #4a78f6;
+      color: var(--accent);
       margin-bottom: 0.75rem;
     }
 
@@ -142,41 +204,35 @@
       font-weight: 700;
       letter-spacing: -0.03em;
       line-height: 1.1;
-      color: #f0f0f0;
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
     }
 
     .tagline {
-      font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      font-weight: 400;
-      color: #8b91a8;
-      max-width: 380px;
-      line-height: 1.65;
-      margin-bottom: 2rem;
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 460px;
+      line-height: 1.6;
+      margin: 0 auto 2.5rem;
     }
 
     .badge {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: rgba(74, 120, 246, 0.08);
-      border: 1px solid rgba(74, 120, 246, 0.22);
+      background: var(--accent-soft);
+      border: 1px solid var(--accent-border);
       border-radius: 100px;
       padding: 0.375rem 0.875rem;
-      font-family: 'Inter', sans-serif;
       font-size: 0.78rem;
       font-weight: 500;
-      color: #4a78f6;
-      margin-bottom: 3rem;
+      color: var(--accent);
     }
 
     .badge-dot {
       width: 6px;
       height: 6px;
-      background: #4a78f6;
+      background: var(--accent);
       border-radius: 50%;
-      flex-shrink: 0;
       animation: pulse 2.4s ease-in-out infinite;
     }
 
@@ -185,40 +241,256 @@
       50% { opacity: 0.35; transform: scale(0.75); }
     }
 
-    .name {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.78rem;
-      color: #3e4358;
+    .scroll-cue {
+      margin-top: 4rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-faint);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
 
-    .name strong {
-      color: #555c75;
-      font-weight: 500;
+    /* ===== Section header ===== */
+    .section-block {
+      padding: 6rem 0;
+      border-top: 1px solid var(--border);
     }
 
-    .email {
-      font-family: 'Inter', sans-serif;
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .section-index {
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.78rem;
-      color: #4a78f6;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .section-intro {
+      color: var(--text-muted);
+      max-width: 580px;
+      margin-bottom: 3rem;
+      font-size: 0.98rem;
+    }
+
+    /* ===== Project cards ===== */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+      transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .card:hover {
+      border-color: var(--border-strong);
+      background: var(--surface-hover);
+      transform: translateY(-2px);
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      background: rgba(140, 155, 200, 0.06);
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    .card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      line-height: 1.25;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      flex-grow: 1;
+    }
+
+    .card-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .stack-chip {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-faint);
+    }
+
+    .stack-chip:not(:last-child)::after {
+      content: '·';
+      margin-left: 0.4rem;
+      color: var(--text-faint);
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.25rem;
+    }
+
+    .card-link {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      color: var(--accent);
       text-decoration: none;
-      margin-top: 0.5rem;
-      opacity: 0.7;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: gap 0.2s ease;
+    }
+
+    .card-link:hover {
+      gap: 0.6rem;
+    }
+
+    .card-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-faint);
+      letter-spacing: 0.04em;
+    }
+
+    /* Placeholder card variant */
+    .card.placeholder {
+      border-style: dashed;
+      align-items: flex-start;
+      justify-content: center;
+      min-height: 180px;
+      text-align: left;
+    }
+
+    .card.placeholder h3 {
+      color: var(--text-muted);
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem 4rem;
+      text-align: center;
+      color: var(--text-faint);
+      font-size: 0.82rem;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+      opacity: 0.85;
       transition: opacity 0.2s ease;
     }
 
-    .email:hover {
+    footer a:hover {
       opacity: 1;
     }
 
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-meta {
+      color: var(--text-faint);
+    }
+
+    .footer-meta strong {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ===== Reveal animations ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger inside a reveal group */
+    .reveal-group > .reveal {
+      transition-delay: 0s;
+    }
+    .reveal-group.is-visible > .reveal:nth-child(1) { transition-delay: 0.05s; }
+    .reveal-group.is-visible > .reveal:nth-child(2) { transition-delay: 0.15s; }
+    .reveal-group.is-visible > .reveal:nth-child(3) { transition-delay: 0.25s; }
+    .reveal-group.is-visible > .reveal:nth-child(4) { transition-delay: 0.35s; }
+    .reveal-group.is-visible > .reveal:nth-child(5) { transition-delay: 0.45s; }
+    .reveal-group.is-visible > .reveal:nth-child(6) { transition-delay: 0.55s; }
+
+    /* Hero auto-reveals on load */
+    .hero .reveal {
+      opacity: 1;
+      transform: translateY(0);
+      animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    }
+    .hero .reveal:nth-child(1) { animation-delay: 0.05s; }
+    .hero .reveal:nth-child(2) { animation-delay: 0.18s; }
+    .hero .reveal:nth-child(3) { animation-delay: 0.32s; }
+    .hero .reveal:nth-child(4) { animation-delay: 0.46s; }
+    .hero .reveal:nth-child(5) { animation-delay: 0.60s; }
+    .hero .reveal:nth-child(6) { animation-delay: 0.78s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      .reveal {
-        animation: none;
+      html { scroll-behavior: auto; }
+      .reveal, .hero .reveal {
         opacity: 1;
         transform: none;
-      }
-      .badge-dot {
         animation: none;
+        transition: none;
       }
+      .badge-dot { animation: none; }
     }
   </style>
 </head>
@@ -226,26 +498,137 @@
 <body>
   <canvas id="stars" aria-hidden="true"></canvas>
 
-  <div class="container">
-    <img src="assets/favicon_optimized.png" alt="PlanetCo.ai Logo" class="logo reveal" />
-    <p class="eyebrow reveal">Strategic AI Observatory</p>
-    <h1 class="reveal">PlanetCo.ai</h1>
-    <p class="tagline reveal">The Strategic AI Observatory — tracking the forces shaping the age of intelligence.</p>
-    <div class="badge reveal">
-      <span class="badge-dot" aria-hidden="true"></span>
-      Coming Soon
+  <nav>
+    <a href="#top" class="nav-brand">
+      <img src="assets/favicon_optimized.png" alt="" />
+      <span>PlanetCo.ai</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#ml-learning">Work</a></li>
+      <li><a href="#agents">Agents</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main id="top">
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <img src="assets/favicon_optimized.png" alt="PlanetCo.ai Logo" class="logo reveal" />
+      <p class="eyebrow reveal">Strategic AI Observatory</p>
+      <h1 class="reveal">PlanetCo.ai</h1>
+      <p class="tagline reveal">
+        ML learning and agent development — the workshop behind Randolph Mbecheun's exploration of applied intelligence.
+      </p>
+      <div class="badge reveal">
+        <span class="badge-dot" aria-hidden="true"></span>
+        Active workshop
+      </div>
+      <div class="scroll-cue reveal">↓ Scroll to explore</div>
+    </section>
+
+    <!-- ===== ML LEARNING ===== -->
+    <section id="ml-learning" class="section section-block">
+      <div class="section-head reveal">
+        <span class="section-index">01 /</span>
+        <h2 class="section-title">ML Learning</h2>
+      </div>
+      <p class="section-intro reveal">
+        Hands-on machine learning projects — built end-to-end, from CLI prototype to deployment. Audio and generative AI are the current focus.
+      </p>
+
+      <div class="cards reveal-group">
+        <!-- Noise Suppression -->
+        <article class="card reveal">
+          <div class="card-tags">
+            <span class="tag">audio</span>
+            <span class="tag">video</span>
+            <span class="tag">deep learning</span>
+          </div>
+          <h3>Noise Suppression Pipeline</h3>
+          <p>
+            End-to-end noise reduction for audio and video files using DeepFilterNet. CLI auto-detects format, extracts the audio stream with FFmpeg, denoises it, then muxes it back into the original video without re-encoding the picture. Runs at ~9× realtime on CPU. Serverless AWS deployment (S3 + Lambda + DynamoDB) in progress.
+          </p>
+          <div class="card-stack">
+            <span class="stack-chip">Python</span>
+            <span class="stack-chip">PyTorch</span>
+            <span class="stack-chip">DeepFilterNet</span>
+            <span class="stack-chip">FFmpeg</span>
+            <span class="stack-chip">AWS Lambda</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://github.com/randolph-mb/noise-suppression" class="card-link" target="_blank" rel="noopener">
+              View on GitHub <span aria-hidden="true">→</span>
+            </a>
+            <span class="card-meta">private repo</span>
+          </div>
+        </article>
+
+        <!-- Cue -->
+        <article class="card reveal">
+          <div class="card-tags">
+            <span class="tag">audio</span>
+            <span class="tag">generative</span>
+            <span class="tag">tts</span>
+          </div>
+          <h3>Cue — Vibe-to-Speech</h3>
+          <p>
+            AI-powered text-to-speech with personality. Generate Mode turns a script into a WAV across five distinct vibes — Professional, Silly, Chaos, Motivation, Tech Storyteller. Theater Mode renders multi-character dialogue, giving every speaker their own voice and tone.
+          </p>
+          <div class="card-stack">
+            <span class="stack-chip">Python</span>
+            <span class="stack-chip">Streamlit</span>
+            <span class="stack-chip">Gemini Live API</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://github.com/randolph-mb/vibe-to-speech" class="card-link" target="_blank" rel="noopener">
+              View on GitHub <span aria-hidden="true">→</span>
+            </a>
+            <span class="card-meta">private repo</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== AGENT DEVELOPMENT ===== -->
+    <section id="agents" class="section section-block">
+      <div class="section-head reveal">
+        <span class="section-index">02 /</span>
+        <h2 class="section-title">Agent Development</h2>
+      </div>
+      <p class="section-intro reveal">
+        Building autonomous and semi-autonomous agents — exploring how language models can plan, act, and coordinate with real systems.
+      </p>
+
+      <div class="cards reveal-group">
+        <article class="card placeholder reveal">
+          <div class="card-tags">
+            <span class="tag">in progress</span>
+          </div>
+          <h3>First agent — incoming</h3>
+          <p>
+            The first project for this track is being scoped. Updates will appear here as the work takes shape.
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="footer-links">
+      <a href="mailto:works@mbecheun.dev">works@mbecheun.dev</a>
+      <a href="https://github.com/randolph-mb" target="_blank" rel="noopener">GitHub</a>
     </div>
-    <div class="name reveal">Built by <strong>Randolph Mbecheun</strong></div>
-    <a href="mailto:works@mbecheun.dev" class="email reveal">works@mbecheun.dev</a>
-  </div>
+    <p class="footer-meta">
+      © PlanetCo.ai — built by <strong>Randolph Mbecheun</strong>
+    </p>
+  </footer>
 
   <script>
+    // ===== Star field =====
     (function () {
       const canvas = document.getElementById('stars');
       const ctx = canvas.getContext('2d');
-
-      // Respect reduced motion preference
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       const STAR_COUNT = 55;
       const stars = [];
@@ -266,7 +649,7 @@
           radius: randomBetween(0.4, 1.2),
           opacity: randomBetween(0.15, 0.45),
           speedX: randomBetween(-0.04, 0.04),
-          speedY: randomBetween(-0.06, -0.02), // drift upward, very slowly
+          speedY: randomBetween(-0.06, -0.02),
           twinkleOffset: randomBetween(0, Math.PI * 2),
           twinkleSpeed: randomBetween(0.003, 0.008),
         };
@@ -288,8 +671,7 @@
         frame++;
 
         for (const s of stars) {
-          // Gentle twinkle via sine wave on opacity
-          const twinkle = Math.sin(frame * s.twinkleSpeed + s.twinkleOffset) * 0.12;
+          const twinkle = reduce ? 0 : Math.sin(frame * s.twinkleSpeed + s.twinkleOffset) * 0.12;
           const alpha = Math.max(0, Math.min(1, s.opacity + twinkle));
 
           ctx.beginPath();
@@ -297,20 +679,39 @@
           ctx.fillStyle = `rgba(200, 215, 255, ${alpha})`;
           ctx.fill();
 
-          // Drift
-          s.x += s.speedX;
-          s.y += s.speedY;
-
-          // Wrap around edges
-          if (s.y < -2) s.y = canvas.height + 2;
-          if (s.x < -2) s.x = canvas.width + 2;
-          if (s.x > canvas.width + 2) s.x = -2;
+          if (!reduce) {
+            s.x += s.speedX;
+            s.y += s.speedY;
+            if (s.y < -2) s.y = canvas.height + 2;
+            if (s.x < -2) s.x = canvas.width + 2;
+            if (s.x > canvas.width + 2) s.x = -2;
+          }
         }
 
         requestAnimationFrame(draw);
       }
 
       draw();
+    })();
+
+    // ===== Reveal on scroll =====
+    (function () {
+      if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.reveal, .reveal-group').forEach(el => el.classList.add('is-visible'));
+        return;
+      }
+
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            io.unobserve(e.target);
+          }
+        }
+      }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+
+      // Observe groups and standalone reveals outside the hero (hero auto-animates)
+      document.querySelectorAll('.section-block .reveal, .section-block .reveal-group').forEach(el => io.observe(el));
     })();
   </script>
 </body>
