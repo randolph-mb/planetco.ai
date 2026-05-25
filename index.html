@@ -564,6 +564,52 @@
       50%      { height: 34px; }
     }
 
+    /* Spreadsheet grid — Excel AI Editor */
+    .card-visual-grid {
+      padding: 6px;
+    }
+
+    .grid-table {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 3px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .grid-cell {
+      background: rgba(74, 120, 246, 0.08);
+      border: 1px solid rgba(74, 120, 246, 0.16);
+      border-radius: 2px;
+      animation: grid-pulse 3.6s ease-in-out infinite;
+    }
+
+    /* Stagger across the grid so a wave reads L→R, top→bottom (AI scanning the sheet) */
+    .grid-cell:nth-child(1)  { animation-delay: -0.00s; }
+    .grid-cell:nth-child(2)  { animation-delay: -0.20s; }
+    .grid-cell:nth-child(3)  { animation-delay: -0.40s; }
+    .grid-cell:nth-child(4)  { animation-delay: -0.60s; }
+    .grid-cell:nth-child(5)  { animation-delay: -0.80s; }
+    .grid-cell:nth-child(6)  { animation-delay: -1.00s; }
+    .grid-cell:nth-child(7)  { animation-delay: -0.30s; }
+    .grid-cell:nth-child(8)  { animation-delay: -0.50s; }
+    .grid-cell:nth-child(9)  { animation-delay: -0.70s; }
+    .grid-cell:nth-child(10) { animation-delay: -0.90s; }
+    .grid-cell:nth-child(11) { animation-delay: -1.10s; }
+    .grid-cell:nth-child(12) { animation-delay: -1.30s; }
+    .grid-cell:nth-child(13) { animation-delay: -0.60s; }
+    .grid-cell:nth-child(14) { animation-delay: -0.80s; }
+    .grid-cell:nth-child(15) { animation-delay: -1.00s; }
+    .grid-cell:nth-child(16) { animation-delay: -1.20s; }
+    .grid-cell:nth-child(17) { animation-delay: -1.40s; }
+    .grid-cell:nth-child(18) { animation-delay: -1.60s; }
+
+    @keyframes grid-pulse {
+      0%, 100% { background: rgba(74, 120, 246, 0.06); border-color: rgba(74, 120, 246, 0.14); }
+      50%      { background: rgba(74, 120, 246, 0.42); border-color: rgba(74, 120, 246, 0.55); }
+    }
+
     .card-tags {
       display: flex;
       gap: 0.5rem;
@@ -748,13 +794,15 @@
       .badge-dot,
       .wave-noisy,
       .wave-clean,
-      .eq-bar {
+      .eq-bar,
+      .grid-cell {
         animation: none;
       }
       /* Keep the clean waveform visible when motion is off */
       .wave-clean { opacity: 0.75; }
       .wave-noisy { opacity: 0.12; }
       .eq-bar { height: 18px; }
+      .grid-cell { background: rgba(74, 120, 246, 0.18); border-color: rgba(74, 120, 246, 0.30); }
     }
   </style>
 </head>
@@ -922,14 +970,37 @@
       </p>
 
       <div class="cards reveal-group">
-        <article class="card placeholder reveal">
-          <div class="card-tags">
-            <span class="tag">in progress</span>
+        <!-- Excel AI Editor -->
+        <article class="card reveal">
+          <div class="card-visual card-visual-grid" aria-hidden="true">
+            <div class="grid-table">
+              <span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span>
+              <span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span>
+              <span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span>
+            </div>
           </div>
-          <h3>First agent — incoming</h3>
+          <div class="card-tags">
+            <span class="tag">agent</span>
+            <span class="tag">spreadsheet</span>
+            <span class="tag">claude</span>
+          </div>
+          <h3>Excel AI Editor</h3>
           <p>
-            The first project for this track is being scoped. Updates will appear here as the work takes shape.
+            A spreadsheet you edit by talking to it. Upload an Excel or CSV file, type an instruction in plain English — sort by date, add a calculated column, drop empty rows — and the editor rewrites the grid for you. Export the result back to .xlsx. The model runs server-side; no API keys touch the browser.
           </p>
+          <div class="card-stack">
+            <span class="stack-chip">React</span>
+            <span class="stack-chip">Vite</span>
+            <span class="stack-chip">Express</span>
+            <span class="stack-chip">LLM-powered</span>
+            <span class="stack-chip">SheetJS</span>
+          </div>
+          <div class="card-footer">
+            <a href="https://d2b0gf4ce0zud3.cloudfront.net" class="card-link" target="_blank" rel="noopener">
+              Try it live <span aria-hidden="true">→</span>
+            </a>
+            <span class="card-meta">live demo</span>
+          </div>
         </article>
       </div>
     </section>
