@@ -818,6 +818,7 @@
     <ul class="nav-links">
       <li><a href="#ml-learning">Work</a></li>
       <li><a href="#agents">Agents</a></li>
+      <li><a href="#capabilities">Capabilities</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -1000,6 +1001,145 @@
               Try it live <span aria-hidden="true">→</span>
             </a>
             <span class="card-meta">live demo</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== 03 / CAPABILITIES ===== -->
+    <section id="capabilities" class="section section-block">
+      <div class="section-head reveal">
+        <span class="section-index">03 /</span>
+        <h2 class="section-title">Capabilities</h2>
+      </div>
+      <p class="section-intro reveal">
+        What the current generation of models actually makes buildable — each one paired
+        with the shift it represents and the concrete case that proves it.
+      </p>
+
+      <div class="cards">
+        <article class="card reveal">
+          <div class="card-tags">
+            <span class="tag">vision</span>
+            <span class="tag">audio</span>
+            <span class="tag">video</span>
+          </div>
+          <h3>Multimodal Understanding</h3>
+          <p>
+            These models are not text-only — they take images, video and audio directly.
+            A tenant moves out and sends twenty photos of the property: the script returns a
+            structured damage report, scratched flooring and holes in the wall each rated for
+            severity. The same call turns an unlabelled product photo into a title, SEO copy
+            and keywords.
+          </p>
+          <div class="card-stack">
+            <span class="stack-chip">Python</span>
+            <span class="stack-chip">multimodal input</span>
+            <span class="stack-chip">structured output</span>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-tags">
+            <span class="tag">extraction</span>
+            <span class="tag">json</span>
+            <span class="tag">documents</span>
+          </div>
+          <h3>Schema-Bound Extraction</h3>
+          <p>
+            Regex-era extraction broke the moment a layout shifted — find the word "Total",
+            take the next five characters, hope for the best. The modern approach inverts it:
+            hand over the document and impose the answer shape instead. The model reads a
+            creased invoice photo the way a person would and fills the schema, so a supplier
+            redesign no longer takes the pipeline down.
+          </p>
+          <div class="card-stack">
+            <span class="stack-chip">Python</span>
+            <span class="stack-chip">JSON schema</span>
+            <span class="stack-chip">document parsing</span>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-tags">
+            <span class="tag">tools</span>
+            <span class="tag">sql</span>
+            <span class="tag">agents</span>
+          </div>
+          <h3>Tool Calling</h3>
+          <p>
+            Instead of returning prose, the model is given permission to call functions in
+            your code. Ask which tenant fell behind on rent most often this year: it writes
+            the query, your script runs it against the real database, hands back the row, and
+            the model turns that into a sentence a human can read. The same wiring lets it
+            book, cancel or notify.
+          </p>
+          <div class="card-stack">
+            <span class="stack-chip">Python</span>
+            <span class="stack-chip">function calling</span>
+            <span class="stack-chip">SQL</span>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-tags">
+            <span class="tag">reasoning</span>
+            <span class="tag">autonomy</span>
+            <span class="tag">orchestration</span>
+          </div>
+          <h3>Autonomous Agents</h3>
+          <p>
+            Old automation was a decision tree — if the customer says "refund", ask for the
+            order number, otherwise fall through. Rigid, and blind to anything unplanned. The
+            modern shape stops encoding the path and encodes the reasoning instead: define the
+            goal, hand over the tools, and let the model choose the sequence and adapt when a
+            step fails.
+          </p>
+          <div class="card-stack">
+            <span class="stack-chip">Python</span>
+            <span class="stack-chip">agent loop</span>
+            <span class="stack-chip">tool use</span>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-tags">
+            <span class="tag">batch</span>
+            <span class="tag">personalization</span>
+            <span class="tag">scale</span>
+          </div>
+          <h3>Generation at Scale</h3>
+          <p>
+            Writing work that would take a team months, run overnight. Five thousand customers
+            in a spreadsheet, each with a purchase history: the script loops, and every one
+            gets a genuinely individual email — their name, their last order, an offer that
+            actually fits. Batch processing sends hundreds of these in parallel rather than
+            one after another.
+          </p>
+          <div class="card-stack">
+            <span class="stack-chip">Python</span>
+            <span class="stack-chip">batch inference</span>
+            <span class="stack-chip">parallel requests</span>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-tags">
+            <span class="tag">automl</span>
+            <span class="tag">tabular</span>
+            <span class="tag">forecasting</span>
+          </div>
+          <h3>Tabular Forecasting</h3>
+          <p>
+            Not every problem is a language problem. Feed in five years of sales history —
+            weather, weekday, product, price — and automated model search trains and compares
+            dozens of candidates for you. What comes out predicts next month's sales with a
+            stated confidence, without a single algorithm written by hand.
+          </p>
+          <div class="card-stack">
+            <span class="stack-chip">AutoML</span>
+            <span class="stack-chip">tabular data</span>
+            <span class="stack-chip">forecasting</span>
           </div>
         </article>
       </div>
