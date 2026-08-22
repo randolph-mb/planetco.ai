@@ -816,8 +816,6 @@
       <span>PlanetCo.ai</span>
     </a>
     <ul class="nav-links">
-      <li><a href="#ml-learning">Work</a></li>
-      <li><a href="#agents">Agents</a></li>
       <li><a href="#capabilities">Capabilities</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -880,136 +878,10 @@
       <div class="scroll-cue reveal">↓ Scroll to explore</div>
     </section>
 
-    <!-- ===== ML LEARNING ===== -->
-    <section id="ml-learning" class="section section-block">
-      <div class="section-head reveal">
-        <span class="section-index">01 /</span>
-        <h2 class="section-title">ML Learning</h2>
-      </div>
-      <p class="section-intro reveal">
-        Hands-on machine learning projects — built end-to-end, from CLI prototype to deployment. Audio and generative AI are the current focus.
-      </p>
-
-      <div class="cards reveal-group">
-        <!-- Noise Suppression -->
-        <article class="card reveal">
-          <div class="card-visual card-visual-waveform" aria-hidden="true">
-            <svg viewBox="0 0 240 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <path class="wave wave-noisy" d="M0,20 L8,8 L16,30 L24,11 L32,29 L40,14 L48,26 L56,9 L64,28 L72,13 L80,31 L88,10 L96,27 L104,16 L112,7 L120,30 L128,14 L136,31 L144,11 L152,27 L160,16 L168,8 L176,29 L184,15 L192,30 L200,11 L208,26 L216,9 L224,29 L232,16 L240,20" />
-              <path class="wave wave-clean" d="M0,20 Q15,11 30,20 T60,20 T90,20 T120,20 T150,20 T180,20 T210,20 T240,20" />
-            </svg>
-          </div>
-          <div class="card-tags">
-            <span class="tag">audio</span>
-            <span class="tag">video</span>
-            <span class="tag">deep learning</span>
-          </div>
-          <h3>Noise Suppression Pipeline</h3>
-          <p>
-            End-to-end noise reduction for audio and video files using DeepFilterNet. CLI auto-detects format, extracts the audio stream with FFmpeg, denoises it, then muxes it back into the original video without re-encoding the picture. Runs at ~9× realtime on CPU. Serverless AWS deployment (S3 + Lambda + DynamoDB) in progress.
-          </p>
-          <div class="card-stack">
-            <span class="stack-chip">Python</span>
-            <span class="stack-chip">PyTorch</span>
-            <span class="stack-chip">DeepFilterNet</span>
-            <span class="stack-chip">FFmpeg</span>
-            <span class="stack-chip">AWS Lambda</span>
-          </div>
-          <div class="card-footer">
-            <a href="https://github.com/randolph-mb/noise-suppression" class="card-link" target="_blank" rel="noopener">
-              View on GitHub <span aria-hidden="true">→</span>
-            </a>
-            <span class="card-meta">private repo</span>
-          </div>
-        </article>
-
-        <!-- Cue -->
-        <article class="card reveal">
-          <div class="card-visual card-visual-equalizer" aria-hidden="true">
-            <span class="eq-bar"></span>
-            <span class="eq-bar"></span>
-            <span class="eq-bar"></span>
-            <span class="eq-bar"></span>
-            <span class="eq-bar"></span>
-            <span class="eq-bar"></span>
-            <span class="eq-bar"></span>
-            <span class="eq-bar"></span>
-            <span class="eq-bar"></span>
-          </div>
-          <div class="card-tags">
-            <span class="tag">audio</span>
-            <span class="tag">generative</span>
-            <span class="tag">tts</span>
-          </div>
-          <h3>Cue — Vibe-to-Speech</h3>
-          <p>
-            AI-powered text-to-speech with personality. Generate Mode turns a script into a WAV across five distinct vibes — Professional, Silly, Chaos, Motivation, Tech Storyteller. Theater Mode renders multi-character dialogue, giving every speaker their own voice and tone.
-          </p>
-          <div class="card-stack">
-            <span class="stack-chip">Python</span>
-            <span class="stack-chip">Streamlit</span>
-            <span class="stack-chip">Gemini Live API</span>
-          </div>
-          <div class="card-footer">
-            <a href="https://github.com/randolph-mb/vibe-to-speech" class="card-link" target="_blank" rel="noopener">
-              View on GitHub <span aria-hidden="true">→</span>
-            </a>
-            <span class="card-meta">private repo</span>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- ===== AGENT DEVELOPMENT ===== -->
-    <section id="agents" class="section section-block">
-      <div class="section-head reveal">
-        <span class="section-index">02 /</span>
-        <h2 class="section-title">Agent Development</h2>
-      </div>
-      <p class="section-intro reveal">
-        Building autonomous and semi-autonomous agents — exploring how language models can plan, act, and coordinate with real systems.
-      </p>
-
-      <div class="cards reveal-group">
-        <!-- Excel AI Editor -->
-        <article class="card reveal">
-          <div class="card-visual card-visual-grid" aria-hidden="true">
-            <div class="grid-table">
-              <span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span>
-              <span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span>
-              <span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span><span class="grid-cell"></span>
-            </div>
-          </div>
-          <div class="card-tags">
-            <span class="tag">agent</span>
-            <span class="tag">spreadsheet</span>
-            <span class="tag">claude</span>
-          </div>
-          <h3>Excel AI Editor</h3>
-          <p>
-            A spreadsheet you edit by talking to it. Upload an Excel or CSV file, type an instruction in plain English — sort by date, add a calculated column, drop empty rows — and the editor rewrites the grid for you. Export the result back to .xlsx. The model runs server-side; no API keys touch the browser.
-          </p>
-          <div class="card-stack">
-            <span class="stack-chip">React</span>
-            <span class="stack-chip">Vite</span>
-            <span class="stack-chip">Express</span>
-            <span class="stack-chip">LLM-powered</span>
-            <span class="stack-chip">SheetJS</span>
-          </div>
-          <div class="card-footer">
-            <a href="https://d2b0gf4ce0zud3.cloudfront.net" class="card-link" target="_blank" rel="noopener">
-              Try it live <span aria-hidden="true">→</span>
-            </a>
-            <span class="card-meta">live demo</span>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- ===== 03 / CAPABILITIES ===== -->
+    <!-- ===== 01 / CAPABILITIES ===== -->
     <section id="capabilities" class="section section-block">
       <div class="section-head reveal">
-        <span class="section-index">03 /</span>
+        <span class="section-index">01 /</span>
         <h2 class="section-title">Capabilities</h2>
       </div>
       <p class="section-intro reveal">
