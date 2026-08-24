@@ -388,24 +388,27 @@
       gap: 14px;
     }
 
+    /* square plate + contain: the three artworks have different native
+       ratios (1.26 / 0.96 / 0.82) and none of them survives being cropped */
     .vision__frame {
       position: relative;
-      aspect-ratio: 3 / 4;
-      background: repeating-linear-gradient(135deg, #e6e0d0 0 8px, #ded7c5 8px 16px);
+      aspect-ratio: 1 / 1;
+      background: #faf8f3;
       border: 1px solid var(--rule);
       display: flex;
-      align-items: flex-end;
-      padding: 16px;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      overflow: hidden;
     }
 
-    .vision__file {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      color: var(--tag);
-      background: var(--paper);
-      padding: 4px 7px;
-      border: 1px solid var(--rule);
+    .vision__frame img {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
     }
 
     .vision figcaption {
@@ -426,6 +429,13 @@
       font-size: 22px;
       font-weight: 300;
       letter-spacing: -0.01em;
+    }
+
+    .vision__src {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      color: var(--faint);
     }
 
     .scroll-cue {
@@ -794,31 +804,37 @@
     <div class="visions__grid">
       <figure class="vision">
         <div class="vision__frame">
-          <span class="vision__file">ml-learning-vision.mp4</span>
+          <img src="assets/images%20and%20videos/Growth%20Chart.png" alt="Bar chart comparing how long selected online services took to reach 100 million users"
+               width="623" height="493" decoding="async" />
         </div>
         <figcaption>
           <span class="vision__num">01 / Vision</span>
           <span class="vision__title">Machine Learning</span>
+          <span class="vision__src">Source: Netscribes / World of Statistics</span>
         </figcaption>
       </figure>
 
       <figure class="vision">
         <div class="vision__frame">
-          <span class="vision__file">agent-development-vision.mp4</span>
+          <img src="assets/images%20and%20videos/Transformer%20Diagram.webp" alt="The transformer model architecture: encoder and decoder stacks with multi-head attention"
+               width="720" height="876" loading="lazy" decoding="async" />
         </div>
         <figcaption>
           <span class="vision__num">02 / Vision</span>
           <span class="vision__title">Agent Development</span>
+          <span class="vision__src">Vaswani et al., Attention Is All You Need (2017)</span>
         </figcaption>
       </figure>
 
       <figure class="vision">
         <div class="vision__frame">
-          <span class="vision__file">observatory-vision.mp4</span>
+          <img src="assets/images%20and%20videos/AlphaGo%20Board.jpg" alt="A Go board showing the first 99 moves of a game, each stone numbered"
+               width="800" height="836" loading="lazy" decoding="async" />
         </div>
         <figcaption>
           <span class="vision__num">03 / Vision</span>
           <span class="vision__title">The Observatory</span>
+          <span class="vision__src">Game record — first 99 moves</span>
         </figcaption>
       </figure>
     </div>
