@@ -37,7 +37,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap"
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap"
     rel="stylesheet" />
 
   <style>
@@ -54,7 +54,10 @@
       --rule-light: #d7cfbd;
       --accent:     #8a3f21;
       --row-hover:  #ece8dd;
+      --ink-deep:   #171a22;
+      --head-h:     64px;
       --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
       --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
     }
 
@@ -77,101 +80,300 @@
     .wrap { max-width: 1180px; margin: 0 auto; }
 
     /* ===== Header ===== */
+    /* fixed + transparent so the ribbon flows across it; the paper bar only
+       appears once the page is scrolled (see the .is-scrolled toggle) */
     .site-head {
-      position: sticky;
+      position: fixed;
       top: 0;
-      z-index: 20;
+      left: 0;
+      right: 0;
+      z-index: 30;
       display: flex;
-      align-items: baseline;
+      align-items: center;
       justify-content: space-between;
       gap: 24px;
-      padding: 18px 40px;
-      background: rgba(242, 239, 231, 0.88);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--rule);
+      height: var(--head-h);
+      padding: 0 40px;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background 0.25s ease, border-color 0.25s ease;
     }
 
+    .site-head.is-scrolled {
+      background: rgba(242, 239, 231, 0.86);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom-color: var(--rule);
+    }
+
+    [id] { scroll-margin-top: calc(var(--head-h) + 16px); }
+
     .site-head__brand {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+      font-family: var(--sans);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.022em;
+      color: var(--ink-deep);
     }
 
     .site-head__nav {
       display: flex;
-      gap: 28px;
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      align-items: center;
+      gap: 26px;
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.006em;
     }
 
-    .site-head__nav a { color: var(--muted); }
+    .site-head__nav a { color: var(--ink-body); }
     .site-head__nav a:hover { color: var(--accent); }
 
-    /* ===== Hero ===== */
-    .hero { padding: 96px 40px 72px; }
-
-    .eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
+    /* ===== Hero (gradient-ribbon lede) ===== */
+    .hero-block {
+      position: relative;
+      overflow: hidden;
     }
 
-    .eyebrow__dot {
-      width: 6px;
-      height: 6px;
+    .hero__art {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      /* dissolve into the page instead of getting sliced by the block edge */
+      -webkit-mask-image: linear-gradient(to bottom, #000 58%, rgba(0, 0, 0, 0.4) 86%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 58%, rgba(0, 0, 0, 0.4) 86%, transparent 100%);
+    }
+
+    .hero__art svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      transform-origin: 72% 28%;
+      /* one composited layer being transformed + hue-shifted: the blurred SVG
+         itself is rasterised once, so this stays cheap */
+      animation: ribbonFlow 38s ease-in-out infinite alternate;
+    }
+
+    @keyframes ribbonFlow {
+      0%   { transform: scale(1.06) rotate(0deg) translate3d(0, 0, 0);          filter: hue-rotate(-9deg); }
+      35%  { transform: scale(1.13) rotate(-1.8deg) translate3d(-2.4%, 1.4%, 0); filter: hue-rotate(4deg); }
+      70%  { transform: scale(1.09) rotate(1.1deg) translate3d(1.6%, -1.2%, 0);  filter: hue-rotate(12deg); }
+      100% { transform: scale(1.15) rotate(-0.6deg) translate3d(-1%, 0.8%, 0);   filter: hue-rotate(-4deg); }
+    }
+
+    /* ===== Ambient glow behind the headline ===== */
+    .hero__glow {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .glow {
+      position: absolute;
       border-radius: 50%;
-      background: var(--accent);
-      display: inline-block;
+      filter: blur(64px);
+    }
+
+    .glow--violet {
+      width: 46%;
+      height: 46%;
+      left: 30%;
+      top: 12%;
+      background: radial-gradient(circle, rgba(120, 78, 216, 0.42), rgba(120, 78, 216, 0) 68%);
+      animation: glowDriftA 21s ease-in-out infinite alternate;
+    }
+
+    .glow--rose {
+      width: 38%;
+      height: 40%;
+      left: 12%;
+      top: 44%;
+      background: radial-gradient(circle, rgba(226, 74, 138, 0.26), rgba(226, 74, 138, 0) 68%);
+      animation: glowDriftB 27s ease-in-out infinite alternate;
+    }
+
+    .glow--amber {
+      width: 44%;
+      height: 44%;
+      left: 56%;
+      top: 30%;
+      background: radial-gradient(circle, rgba(255, 150, 60, 0.3), rgba(255, 150, 60, 0) 68%);
+      animation: glowDriftC 24s ease-in-out infinite alternate;
+    }
+
+    @keyframes glowDriftA {
+      0%   { transform: translate3d(0, 0, 0) scale(1);      opacity: 0.75; }
+      100% { transform: translate3d(7%, -6%, 0) scale(1.2); opacity: 1; }
+    }
+
+    @keyframes glowDriftB {
+      0%   { transform: translate3d(0, 0, 0) scale(1.1);    opacity: 0.6; }
+      100% { transform: translate3d(-6%, 5%, 0) scale(0.9); opacity: 0.95; }
+    }
+
+    @keyframes glowDriftC {
+      0%   { transform: translate3d(0, 0, 0) scale(0.95);   opacity: 0.7; }
+      100% { transform: translate3d(-5%, 7%, 0) scale(1.15); opacity: 1; }
+    }
+
+    /* keeps the left half clean paper; the ribbon only surfaces on the right */
+    .hero__art::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(101deg,
+        var(--paper) 0%,
+        rgba(242, 239, 231, 0.95) 24%,
+        rgba(242, 239, 231, 0.6) 43%,
+        rgba(242, 239, 231, 0) 66%);
+    }
+
+    .hero {
+      position: relative;
+      z-index: 2;
+      padding: calc(var(--head-h) + 52px) 40px 78px;
+    }
+
+    .hero__stat {
+      margin: 0 0 30px;
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.006em;
+      color: var(--ink-deep);
+    }
+
+    .hero__stat b {
+      font-weight: 400;
+      color: var(--muted);
+      margin-left: 6px;
     }
 
     .hero h1 {
-      font-size: clamp(56px, 9vw, 132px);
-      font-weight: 300;
-      line-height: 0.94;
-      letter-spacing: -0.03em;
-      margin: 28px 0 0;
-    }
-
-    .hero__meta {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 48px;
-      align-items: end;
-      margin-top: 40px;
-      padding-top: 28px;
-      border-top: 1px solid var(--rule);
-    }
-
-    .hero__tagline {
       margin: 0;
-      font-size: 23px;
-      line-height: 1.5;
-      font-weight: 300;
+      max-width: min(100%, 980px);
+      font-family: var(--sans);
+      font-size: clamp(34px, 4.9vw, 58px);
+      font-weight: 600;
+      line-height: 1.16;
+      letter-spacing: -0.028em;
+      color: var(--ink-deep);
       text-wrap: pretty;
-      max-width: 36ch;
     }
 
-    .hero__status {
+    /* the ribbon bleeds into the tail of the sentence */
+    @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+      .hero h1 {
+        background-image: linear-gradient(96deg,
+          var(--ink-deep) 0%,
+          var(--ink-deep) 52%,
+          #35309b 66%,
+          #573cbe 82%,
+          #7c3fae 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+    }
+
+    .hero__actions {
       display: flex;
-      justify-content: flex-end;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 38px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 21px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.006em;
+      transition: background 0.16s ease, color 0.16s ease, transform 0.16s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn__chev { font-size: 12px; opacity: 0.75; }
+
+    .btn--primary {
+      background: var(--accent);
+      color: #fbf7ef;
+      box-shadow: 0 2px 12px rgba(138, 63, 33, 0.2);
+    }
+
+    .btn--primary:hover { background: #9c4a27; color: #fbf7ef; }
+
+    .btn--ghost {
+      background: rgba(253, 251, 246, 0.86);
+      color: var(--ink-deep);
+      border-color: var(--rule);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+    }
+
+    .btn--ghost:hover { color: var(--accent); border-color: var(--rule-light); }
+
+    /* ===== Wordmark band (infinite marquee) ===== */
+    .logo-band {
+      position: relative;
+      z-index: 2;
+      border-top: 1px solid var(--rule);
+      padding: 24px 0 28px;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+    }
+
+    .marquee__track {
+      display: flex;
+      width: max-content;
+      animation: marquee 46s linear infinite;
+    }
+
+    .logo-band:hover .marquee__track { animation-play-state: paused; }
+
+    .marquee__group {
+      display: flex;
+      align-items: center;
+      flex: none;
+    }
+
+    @keyframes marquee {
+      from { transform: translate3d(0, 0, 0); }
+      to   { transform: translate3d(-50%, 0, 0); }
+    }
+
+    .logo-band__mark {
+      display: inline-flex;
+      align-items: center;
+      padding: 0 30px;
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.012em;
+      white-space: nowrap;
+      color: var(--tag);
+    }
+
+    .logo-band__mark::after {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--rule-light);
+      margin-left: 30px;
     }
 
     /* ===== Vision panels ===== */
-    .visions { padding: 0 40px 96px; }
+    .visions { padding: 76px 40px 96px; }
 
     .visions__grid {
       display: grid;
@@ -413,22 +615,34 @@
     .site-foot__links span { color: var(--faint); }
 
     /* ===== Responsive ===== */
+    @media (max-width: 1180px) {
+      .hero h1 { max-width: min(100%, 700px); }
+    }
+
     @media (max-width: 900px) {
       .cap { grid-template-columns: 48px minmax(0, 1fr); gap: 20px 24px; }
       .cap__body { grid-column: 2; }
       .sec-grid { grid-template-columns: 48px minmax(0, 1fr); gap: 24px; }
-      .sec-head__inner,
-      .hero__meta { grid-template-columns: minmax(0, 1fr); gap: 24px; }
-      .hero__status { justify-content: flex-start; }
+      .sec-head__inner { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+      .hero { padding: calc(var(--head-h) + 34px) 24px 58px; }
+      .logo-band { padding: 20px 0 24px; }
       .site-foot__inner { grid-template-columns: 48px minmax(0, 1fr); gap: 24px; }
       .visions__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 640px) {
-      .site-head { padding: 14px 20px; gap: 16px; flex-wrap: wrap; }
+      :root { --head-h: 56px; }
+      .site-head { padding: 0 20px; gap: 16px; }
       .site-head__nav { gap: 18px; }
-      .hero { padding: 56px 20px 48px; }
-      .visions { padding: 0 20px 64px; }
+      .hero { padding: calc(var(--head-h) + 30px) 20px 44px; }
+      .hero__art { opacity: 0.5; }
+      .hero h1 { max-width: 100%; background-image: none; color: var(--ink-deep); }
+      .hero__actions { margin-top: 30px; }
+      .btn { flex: 1 1 auto; justify-content: center; }
+      .logo-band { padding: 18px 0 22px; }
+      .logo-band__mark { padding: 0 20px; font-size: 14px; }
+      .logo-band__mark::after { margin-left: 20px; }
+      .visions { padding: 52px 20px 64px; }
       .visions__grid { grid-template-columns: minmax(0, 1fr); }
       .capabilities__head { padding: 56px 20px 28px; }
       .capabilities__list { padding: 0 20px 64px; }
@@ -440,6 +654,7 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       * { animation: none !important; transition: none !important; }
+      .hero__art svg { transform: scale(1.08); }
     }
   </style>
 </head>
@@ -455,20 +670,124 @@
   </header>
 
   <!-- ===== HERO ===== -->
-  <section class="hero wrap">
-    <div class="eyebrow">
-      <span class="eyebrow__dot"></span>
-      <span>Strategic AI Observatory</span>
+  <div class="hero-block">
+    <div class="hero__art" aria-hidden="true">
+      <svg viewBox="0 0 1440 820" preserveAspectRatio="xMidYMid slice" role="presentation" focusable="false">
+        <defs>
+          <linearGradient id="rb0" gradientUnits="userSpaceOnUse" x1="600" y1="0" x2="1500" y2="820">
+            <stop offset="0" stop-color="#bccbff"/>
+            <stop offset="1" stop-color="#8aa3f6"/>
+          </linearGradient>
+          <linearGradient id="rb1" gradientUnits="userSpaceOnUse" x1="600" y1="0" x2="1500" y2="820">
+            <stop offset="0" stop-color="#93a6fb"/>
+            <stop offset="1" stop-color="#6a5df2"/>
+          </linearGradient>
+          <linearGradient id="rb2" gradientUnits="userSpaceOnUse" x1="600" y1="0" x2="1500" y2="820">
+            <stop offset="0" stop-color="#7d5df0"/>
+            <stop offset="1" stop-color="#a04ee4"/>
+          </linearGradient>
+          <linearGradient id="rb3" gradientUnits="userSpaceOnUse" x1="600" y1="0" x2="1500" y2="820">
+            <stop offset="0" stop-color="#c94ad4"/>
+            <stop offset="1" stop-color="#f0409a"/>
+          </linearGradient>
+          <linearGradient id="rb4" gradientUnits="userSpaceOnUse" x1="600" y1="0" x2="1500" y2="820">
+            <stop offset="0" stop-color="#ff4f86"/>
+            <stop offset="1" stop-color="#ff6b40"/>
+          </linearGradient>
+          <linearGradient id="rb5" gradientUnits="userSpaceOnUse" x1="600" y1="0" x2="1500" y2="820">
+            <stop offset="0" stop-color="#ff8138"/>
+            <stop offset="1" stop-color="#ffa845"/>
+          </linearGradient>
+          <linearGradient id="rb6" gradientUnits="userSpaceOnUse" x1="600" y1="0" x2="1500" y2="820">
+            <stop offset="0" stop-color="#ffc264"/>
+            <stop offset="1" stop-color="#ffdcab"/>
+          </linearGradient>
+          <radialGradient id="rbGlow" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#ffd7a1" stop-opacity="0.75"/>
+            <stop offset="1" stop-color="#ffd7a1" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="rbSoft" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="24"/>
+          </filter>
+          <filter id="rbCrisp" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="5"/>
+          </filter>
+        </defs>
+        <ellipse cx="1240" cy="120" rx="360" ry="240" fill="url(#rbGlow)"/>
+        <g fill="none" stroke-linecap="round" filter="url(#rbSoft)" opacity="0.8">
+          <path d="M 600,-90 C 720,110 1010,250 1180,420 C 1310,520 1340,630 1430,820" stroke="url(#rb0)" stroke-width="64"/>
+          <path d="M 698,-90 C 818,110 1042,250 1212,432 C 1342,532 1458,642 1548,832" stroke="url(#rb1)" stroke-width="62"/>
+          <path d="M 796,-90 C 916,110 1074,250 1244,444 C 1374,544 1576,654 1666,844" stroke="url(#rb2)" stroke-width="60"/>
+          <path d="M 894,-90 C 1014,110 1106,250 1276,456 C 1406,556 1694,666 1784,856" stroke="url(#rb3)" stroke-width="58"/>
+          <path d="M 992,-90 C 1112,110 1138,250 1308,468 C 1438,568 1812,678 1902,868" stroke="url(#rb4)" stroke-width="56"/>
+          <path d="M 1090,-90 C 1210,110 1170,250 1340,480 C 1470,580 1930,690 2020,880" stroke="url(#rb5)" stroke-width="54"/>
+          <path d="M 1188,-90 C 1308,110 1202,250 1372,492 C 1502,592 2048,702 2138,892" stroke="url(#rb6)" stroke-width="52"/>
+        </g>
+        <g fill="none" stroke-linecap="round" filter="url(#rbCrisp)" opacity="0.9">
+          <path d="M 600,-90 C 720,110 1010,250 1180,420 C 1310,520 1340,630 1430,820" stroke="url(#rb0)" stroke-width="17"/>
+          <path d="M 698,-90 C 818,110 1042,250 1212,432 C 1342,532 1458,642 1548,832" stroke="url(#rb1)" stroke-width="16"/>
+          <path d="M 796,-90 C 916,110 1074,250 1244,444 C 1374,544 1576,654 1666,844" stroke="url(#rb2)" stroke-width="15"/>
+          <path d="M 894,-90 C 1014,110 1106,250 1276,456 C 1406,556 1694,666 1784,856" stroke="url(#rb3)" stroke-width="14"/>
+          <path d="M 992,-90 C 1112,110 1138,250 1308,468 C 1438,568 1812,678 1902,868" stroke="url(#rb4)" stroke-width="13"/>
+          <path d="M 1090,-90 C 1210,110 1170,250 1340,480 C 1470,580 1930,690 2020,880" stroke="url(#rb5)" stroke-width="12"/>
+          <path d="M 1188,-90 C 1308,110 1202,250 1372,492 C 1502,592 2048,702 2138,892" stroke="url(#rb6)" stroke-width="11"/>
+        </g>
+      </svg>
     </div>
-    <h1>PlanetCo.ai</h1>
-    <div class="hero__meta">
-      <p class="hero__tagline">
-        ML learning and agent development — the workshop behind Randolph Mbecheun's exploration
-        of applied intelligence.
-      </p>
-      <div class="hero__status"><span>Active workshop</span></div>
+
+    <div class="hero__glow" aria-hidden="true">
+      <span class="glow glow--violet"></span>
+      <span class="glow glow--rose"></span>
+      <span class="glow glow--amber"></span>
     </div>
-  </section>
+
+    <section class="hero">
+      <div class="wrap">
+        <p class="hero__stat">Capabilities in the current catalogue:<b>06</b></p>
+        <h1>
+          Applied AI, built end to end. Multimodal understanding, schema-bound extraction,
+          tool calling and autonomous agents.
+        </h1>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#capabilities">See the capabilities <span class="btn__chev">›</span></a>
+          <a class="btn btn--ghost" href="mailto:works@mbecheun.dev">Get in touch <span class="btn__chev">›</span></a>
+        </div>
+      </div>
+    </section>
+
+    <div class="logo-band">
+      <div class="marquee__track">
+        <div class="marquee__group">
+          <span class="logo-band__mark">Multimodal</span>
+          <span class="logo-band__mark">Extraction</span>
+          <span class="logo-band__mark">Tool Calling</span>
+          <span class="logo-band__mark">Agents</span>
+          <span class="logo-band__mark">Generation</span>
+          <span class="logo-band__mark">Forecasting</span>
+          <span class="logo-band__mark">Multimodal</span>
+          <span class="logo-band__mark">Extraction</span>
+          <span class="logo-band__mark">Tool Calling</span>
+          <span class="logo-band__mark">Agents</span>
+          <span class="logo-band__mark">Generation</span>
+          <span class="logo-band__mark">Forecasting</span>
+        </div>
+        <div class="marquee__group" aria-hidden="true">
+          <span class="logo-band__mark">Multimodal</span>
+          <span class="logo-band__mark">Extraction</span>
+          <span class="logo-band__mark">Tool Calling</span>
+          <span class="logo-band__mark">Agents</span>
+          <span class="logo-band__mark">Generation</span>
+          <span class="logo-band__mark">Forecasting</span>
+          <span class="logo-band__mark">Multimodal</span>
+          <span class="logo-band__mark">Extraction</span>
+          <span class="logo-band__mark">Tool Calling</span>
+          <span class="logo-band__mark">Agents</span>
+          <span class="logo-band__mark">Generation</span>
+          <span class="logo-band__mark">Forecasting</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ===== VISION PANELS ===== -->
   <section class="visions wrap">
@@ -666,6 +985,17 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      var head = document.querySelector('.site-head');
+      var sync = function () {
+        head.classList.toggle('is-scrolled', window.scrollY > 8);
+      };
+      sync();
+      window.addEventListener('scroll', sync, { passive: true });
+    })();
+  </script>
 
 </body>
 </html>
